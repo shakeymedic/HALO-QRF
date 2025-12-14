@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BHH HALO Handbook</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-blue: #005eb8; /* NHS Blueish */
+            --bg-green: #e6f4ea;
+            --border-green: #cce8d7;
+            --text-green: #137333;
+            --bg-blue: #e8f0fe;
+            --border-blue: #d2e3fc;
+            --text-blue: #1967d2;
+            --bg-red: #fce8e6;
+            --border-red: #fad2cf;
+            --text-red: #c5221f;
+            --bg-yellow: #fef7e0;
+            --border-yellow: #feefc3;
+            --text-yellow: #ea8600;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Page Layout */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 10mm auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            position: relative;
+            page-break-after: always;
+            break-after: page;
+        }
+
+        /* Print Button Styles */
+        .print-btn-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .print-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .print-btn:hover {
+            background-color: #004b93;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                height: 100%;
+                page-break-after: always;
+            }
+            .print-btn-container, .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Typography */
+        h1 { font-size: 24pt; color: var(--primary-blue); margin-bottom: 10mm; }
+        h2 { font-size: 18pt; color: #333; border-bottom: 2px solid var(--primary-blue); padding-bottom: 2mm; margin-bottom: 5mm; }
+        h3 { font-size: 12pt; color: var(--primary-blue); margin-top: 4mm; margin-bottom: 2mm; text-transform: uppercase; letter-spacing: 0.5px; }
+        p, li { font-size: 10pt; line-height: 1.4; }
+
+        /* Title Page */
+        .title-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+        .title-page h1 { font-size: 36pt; margin-bottom: 5mm; }
+        .title-page h2 { border: none; font-size: 20pt; color: #555; }
+        .logo-placeholder {
+            width: 150px;
+            height: 150px;
+            background: #eee;
+            margin: 20mm 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #999;
+        }
+
+        /* Contents */
+        .contents-list { list-style: none; padding: 0; }
+        .contents-list li {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dotted #ccc;
+            padding: 2mm 0;
+            font-size: 12pt;
+        }
+
+        /* Checklist Page Styles */
+        .checklist-container { display: flex; flex-direction: column; gap: 4mm; }
+        .checklist-section { background: #fff; }
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5mm;
+            font-size: 10pt;
+        }
+        .checkbox {
+            width: 4mm;
+            height: 4mm;
+            border: 1px solid #999;
+            margin-right: 3mm;
+            flex-shrink: 0;
+            margin-top: 1mm;
+        }
+        .warning-box {
+            background-color: var(--bg-red);
+            border: 1px solid var(--border-red);
+            color: var(--text-red);
+            padding: 3mm;
+            border-radius: 2mm;
+            font-weight: bold;
+            margin-top: 2mm;
+            text-align: center;
+        }
+        
+        /* Equipment Box Style */
+        .equipment-box {
+            background-color: var(--bg-blue);
+            border: 1px solid var(--border-blue);
+            color: #333;
+            padding: 4mm;
+            border-radius: 2mm;
+            margin-bottom: 4mm;
+        }
+        .equipment-box h3 {
+            margin-top: 0;
+            color: var(--text-blue);
+            font-size: 11pt;
+        }
+        .equipment-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2mm;
+            font-size: 9pt;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .equipment-list li {
+            position: relative;
+            padding-left: 4mm;
+        }
+        .equipment-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--text-blue);
+        }
+
+        /* Flowchart Styles */
+        .flowchart-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .chart-title {
+            background-color: white;
+            color: #003087;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 18pt;
+            margin-bottom: 10mm;
+            text-align: center;
+        }
+
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 10mm; /* Vertical spacing between rows */
+        }
+
+        .flow-row {
+            display: flex;
+            justify-content: center;
+            gap: 5mm;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .flow-card {
+            padding: 5mm;
+            border-radius: 3mm;
+            width: 250px; /* Fixed width for consistency */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+            text-align: left;
+        }
+        
+        .flow-card ul {
+            padding-left: 5mm;
+            margin: 2mm 0 0 0;
+        }
+        
+        .flow-card li {
+            font-size: 8.5pt;
+            margin-bottom: 1mm;
+        }
+
+        .fc-header {
+            font-weight: 700;
+            font-size: 10pt;
+            margin-bottom: 2mm;
+            display: block;
+        }
+
+        /* Colors matching the reference image */
+        .card-green {
+            background-color: var(--bg-green);
+            border: 1px solid var(--border-green);
+            color: var(--text-green);
+        }
+        .card-green .fc-header { color: var(--text-green); }
+
+        .card-yellow {
+            background-color: var(--bg-yellow);
+            border: 1px solid var(--border-yellow);
+            color: #b06000;
+        }
+        .card-yellow .fc-header { color: #b06000; }
+
+        .card-blue {
+            background-color: var(--bg-blue);
+            border: 1px solid var(--border-blue);
+            color: var(--text-blue);
+            width: 300px; /* Main action slightly wider */
+            text-align: center;
+        }
+        .card-blue .fc-header { font-size: 12pt; }
+        .card-blue li { text-align: left; }
+
+        .card-red {
+            background-color: var(--bg-red);
+            border: 1px solid var(--border-red);
+            color: var(--text-red);
+        }
+
+        /* Arrow Logic */
+        .arrow-down {
+            display: flex;
+            justify-content: center;
+            height: 10mm;
+            align-items: center;
+            margin-top: -10mm; /* Pull up to overlay gap */
+            margin-bottom: -10mm;
+            z-index: 1;
+            color: #ccc;
+        }
+        
+        /* Utility for centering content in standard page */
+        .center-text { text-align: center; }
+        
+        .page-number {
+            position: absolute;
+            bottom: 10mm;
+            right: 10mm;
+            color: #999;
+            font-size: 9pt;
+        }
+        
+        /* Side by side layout for intro pages */
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10mm;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Print Button -->
+    <div class="print-btn-container">
+        <button class="print-btn" onclick="window.print()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print / Save as PDF
+        </button>
+    </div>
+
+    <!-- PAGE 1: TITLE PAGE -->
+    <div class="page title-page">
+        <div class="logo-placeholder">BHH Logo</div>
+        <h1>HALO Procedures</h1>
+        <h2>Quick Reference Handbook</h2>
+        <div style="margin-top: 20mm; font-size: 14pt;">
+            <p><strong>Dr Jake Turner</strong></p>
+            <p>High Acuity, Low Occurrence Emergency Procedures</p>
+            <p>Version 2.0 | December 2025</p>
+            <p style="margin-top:10mm; color: var(--primary-blue);">Birmingham Heartlands Hospital<br>Emergency Department, Resuscitation Area</p>
+        </div>
+        <div class="page-number">1</div>
+    </div>
+
+    <!-- PAGE 2: HOW TO USE -->
+    <div class="page">
+        <h2>How to use this Quick Reference Handbook</h2>
+        <p>This guide is designed for high acuity, low occurrence skills happening in the ED. These include those that may be done by other specialties (e.g. obstetrics and resus hysterotomy, anaesthetics and subclavian line insertion), although all of them potentially fall under the purview and skillset of senior Emergency Medicine Physicians.</p>
+        
+        <div class="intro-grid">
+            <div style="background: #f9f9f9; padding: 5mm; border-radius: 3mm;">
+                <h3>1. Find the procedure</h3>
+                <p>Locate the procedure in the contents page. Navigate to the procedure spread.</p>
+            </div>
+            <div style="background: #f9f9f9; padding: 5mm; border-radius: 3mm;">
+                <h3>2. Left Page: Checklist</h3>
+                <p>On the left hand side, there is a full detailed checklist including precise equipment lists. Use this for thorough preparation.</p>
+            </div>
+            <div style="background: #f9f9f9; padding: 5mm; border-radius: 3mm;">
+                <h3>3. Right Page: Flowchart</h3>
+                <p>On the right side is the abbreviated flowchart. This is designed to be used in a similar manner to the ALS algorithms for real-time guidance.</p>
+            </div>
+        </div>
+
+        <h3>Emergency Contacts</h3>
+        <ul style="line-height: 2;">
+            <li><strong>Consultant on call:</strong> Via switchboard</li>
+            <li><strong>Nurse in charge:</strong> Resus</li>
+            <li><strong>Theatre coordinator:</strong> #</li>
+            <li><strong>Registrars:</strong> Cardiothoracic / Obstetrics / Ophthalmology via switchboard</li>
+        </ul>
+        <div class="page-number">2</div>
+    </div>
+
+    <!-- PAGE 3: CONTENTS -->
+    <div class="page">
+        <h2>Contents</h2>
+        <ul class="contents-list">
+            <li><span>1. Chest Drain Insertion</span> <span>Page 4-5</span></li>
+            <li><span>2. Emergency Thoracotomy</span> <span>Page 6-7</span></li>
+            <li><span>3. Escharotomy</span> <span>Page 8-9</span></li>
+            <li><span>4. Landmark Subclavian Line</span> <span>Page 10-11</span></li>
+            <li><span>5. Lateral Canthotomy</span> <span>Page 12-13</span></li>
+            <li><span>6. Major Haemorrhage Control</span> <span>Page 14-15</span></li>
+            <li><span>7. MaxFax Trauma</span> <span>Page 16-17</span></li>
+            <li><span>8. Resuscitative Hysterotomy</span> <span>Page 18-19</span></li>
+            <li><span>9. Open Thoracostomy</span> <span>Page 20-21</span></li>
+            <li><span>10. Pericardiocentesis (Echo-Guided)</span> <span>Page 22-23</span></li>
+        </ul>
+        <div class="warning-box" style="margin-top: 20mm; text-align: center; color: #333; background: #eee; border: 1px solid #ccc;">
+            Disclaimer: This handbook is an aide-memoire for trained clinicians. It does not replace clinical judgement or senior support.
+        </div>
+        <div class="page-number">3</div>
+    </div>
+
+    <!-- ================= PROCEDURE 1: CHEST DRAIN ================= -->
+    
+    <!-- PAGE 4: CHECKLIST -->
+    <div class="page">
+        <h2>1. Chest Drain Insertion</h2>
+        <p><strong>Indication:</strong> Traumatic haemothorax/pneumothorax with respiratory distress OR Tension pneumothorax if needle decompression failed.</p>
+        
+        <!-- NEW EQUIPMENT SECTION -->
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>28-32Fr chest drain (adult trauma)</li>
+                <li>Surgical prep kit (Chlorhexidine)</li>
+                <li>Local anaesthetic (1% lidocaine 20mL)</li>
+                <li>Scalpel (size 10 blade)</li>
+                <li>Spencer Wells forceps (blunt dissection)</li>
+                <li>Mattress suture (1-0 silk)</li>
+                <li>Sterile gloves & Gown</li>
+                <li>Underwater seal system (-20cmH₂O)</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Call for Help & Assessment</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Inform Consultant on call & Nurse in charge</div>
+                <div class="checklist-item"><div class="checkbox"></div> Request surgical support if massive haemothorax anticipated</div>
+                <div class="checklist-item"><div class="checkbox"></div> Allocate roles: Team Leader, Scribe, Procedure Clinician</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Confirm Indication:</strong> Consider USS or portable CXR if patient is stable enough</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>2. Preparation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Obtain consent if possible (explain risks: pain, bleeding, infection, visceral injury)</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Position:</strong> 30-45° sitting up (if C-spine allows), arm abducted 90°, hand behind head</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Identify Landmarks (Triangle of Safety):</strong> Ant. edge Lat Dorsi, Lat. edge Pec Major, Apex of Axilla, 5th ICS</div>
+                <div class="checklist-item"><div class="checkbox"></div> Assistant to hold breast tissue out of the way if required</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Sterile prep and drape. Strict aseptic technique.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Infiltrate 1% Lidocaine (up to 20mL) - Skin, Subcutaneous, Periosteum, Pleura</div>
+                <div class="checklist-item"><div class="checkbox"></div> Incision: 2-3cm transverse, just **superior** to the rib border (avoid N/V bundle)</div>
+                <div class="checklist-item"><div class="checkbox"></div> Blunt dissection with Spencer Wells forceps through intercostal muscles</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Digital Exploration:</strong> Insert finger to confirm pleural space & sweep for adhesions</div>
+                <div class="warning-box">CRITICAL: NEVER USE A TROCAR</div>
+                <div class="checklist-item"><div class="checkbox"></div> Insert drain guided by finger: Direct Posteriorly and Superiorly</div>
+                <div class="checklist-item"><div class="checkbox"></div> Ensure all drainage holes are within the pleural cavity</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>4. Completion</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Connect to underwater seal (ensure water level correct)</div>
+                <div class="checklist-item"><div class="checkbox"></div> Confirm swing with respiration and bubbling</div>
+                <div class="checklist-item"><div class="checkbox"></div> Secure with **Mattress Suture** (1-0 Silk). Do not purse-string.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Apply sterile dressing (e.g., drain fix + tegaderm)</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Post-Procedure:</strong> Urgent CXR. Monitor output hourly.</div>
+            </div>
+            
+             <div class="warning-box">Surgical Review Criteria: >1500mL initial output OR >200mL/hr for 2-4 hours</div>
+        </div>
+        <div class="page-number">4</div>
+    </div>
+
+    <!-- PAGE 5: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Chest Drain Insertion</div>
+        
+        <div class="flow-container">
+            <!-- Row 1: Prep -->
+            <div class="flow-row">
+                <div class="flow-card card-green">
+                    <span class="fc-header">1. Call for Help</span>
+                    <ul>
+                        <li>Consultant on call + NIC</li>
+                        <li>Surgical support if massive</li>
+                        <li>Allocate team roles</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Preparation & Team Brief</span>
+                    <ul>
+                        <li>Position 30-45°, arm abducted</li>
+                        <li>Triangle of Safety identified</li>
+                        <li>5th Intercostal Space</li>
+                        <li>Large bore drain (28-32Fr) ready</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-green">
+                    <span class="fc-header">3. Throughout Procedure</span>
+                    <ul>
+                        <li>Sterile technique</li>
+                        <li>Digital exploration mandatory</li>
+                        <li>NEVER use trocar</li>
+                        <li>Monitor patient vitals</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <!-- Row 2: Action -->
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Perform Chest Drain Insertion</span>
+                    <ul>
+                        <li>2-3cm incision superior to rib border</li>
+                        <li>Blunt dissection with forceps to pleura</li>
+                        <li><strong>Digital examination essential</strong></li>
+                        <li>Insert drain posteriorly & superiorly</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <!-- Row 3: Completion -->
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-Procedure Management</span>
+                    <ul>
+                        <li>Secure with mattress suture</li>
+                        <li>Connect to underwater seal (-20cmH₂O)</li>
+                        <li>Confirm swing/bubbling</li>
+                        <li>Urgent CXR</li>
+                        <li>Monitor hourly drainage</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="arrow-down">↓</div>
+
+            <!-- Row 4: Critical -->
+            <div class="flow-row">
+                <div class="flow-card card-red" style="width: 100%;">
+                    <span class="fc-header">Key Considerations</span>
+                    <ul>
+                        <li><strong>URGENT SURGICAL REVIEW:</strong> >1500mL initial drainage OR >200mL/hr</li>
+                        <li><strong>Triangle of Safety:</strong> Lateral edge pec major, Anterior edge lat dorsi, Apex of axilla, 5th ICS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">5</div>
+    </div>
+
+    <!-- ================= PROCEDURE 2: EMERGENCY THORACOTOMY ================= -->
+
+    <!-- PAGE 6: CHECKLIST -->
+    <div class="page">
+        <h2>2. Emergency Thoracotomy</h2>
+        <p><strong>Indication:</strong> Traumatic cardiac arrest. Penetrating chest < 10 mins OR Blunt chest < 5 mins.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required (Thoracotomy Tray)</h3>
+            <ul class="equipment-list">
+                <li>Scalpel (Size 10 and 20 blades)</li>
+                <li>Rib spreaders (Finochietto)</li>
+                <li>Heavy scissors (Mayo/Tuff Cut)</li>
+                <li>Gigli saw (for sternal extension)</li>
+                <li>Toothed forceps (Bonney's)</li>
+                <li>Large bore suction (Yankauer x2)</li>
+                <li>Aortic Clamp</li>
+                <li>3-0 Prolene (cardiac repair) / Skin Stapler</li>
+                <li>Internal Defibrillator paddles (if available)</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Immediate Activation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Call Consultant & NIC</div>
+                <div class="checklist-item"><div class="checkbox"></div> Call Cardiothoracic Registrar IMMEDIATELY</div>
+                <div class="checklist-item"><div class="checkbox"></div> Activate Major Haemorrhage Protocol (Pack A)</div>
+                <div class="warning-box">Contraindication: Asystole > 10 minutes</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>2. Preparation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Continue CPR (unless interfering with procedure)</div>
+                <div class="checklist-item"><div class="checkbox"></div> Intubate and ventilate with 100% O2 (disconnect briefly during incision if needed)</div>
+                <div class="checklist-item"><div class="checkbox"></div> Rapid skin prep (Chlorhexidine/Betadine) - time permitting</div>
+                <div class="checklist-item"><div class="checkbox"></div> Right arm abducted to 90 degrees</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Procedure: Left Anterolateral Thoracotomy</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Incision: 4th or 5th ICS (Nipple level in male), from Mid-axillary line to sternal border</div>
+                <div class="checklist-item"><div class="checkbox"></div> Single bold incision with large blade through skin and subcutaneous tissue</div>
+                <div class="checklist-item"><div class="checkbox"></div> Stop ventilation briefly. Cut through intercostal muscles with heavy scissors/scalpel.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Insert rib spreaders (handle down toward bed) and crank open vigorously.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>4. HOT Protocol</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>H: Haemorrhage Control</strong> - Twist lung hilum to control lung bleed. Compress aorta against spine or apply aortic clamp.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>O: Open Pericardium</strong> - Use toothed forceps to lift pericardium. Make longitudinal incision anterior & parallel to Phrenic Nerve.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>T: Treat Heart</strong> - Evacuate clot ('birth' the heart). Identify wound.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Control cardiac wound: Digital pressure, Foley catheter balloon, Skin staples, or Sutures (3-0 Prolene).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Perform internal cardiac massage (two hands/flat palms) if no output.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <em>Consider Clamshell:</em> If right sided injury suspected or poor access, extend incision across sternum.</div>
+            </div>
+        </div>
+        <div class="page-number">6</div>
+    </div>
+
+    <!-- PAGE 7: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Emergency Thoracotomy</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-red">
+                    <span class="fc-header">1. IMMEDIATE Call</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li><strong>Cardiothoracic Reg URGENTLY</strong></li>
+                        <li>Major Haemorrhage Protocol</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Preparation</span>
+                    <ul>
+                        <li>Thoracotomy tray ready</li>
+                        <li>Scalpel, spreaders, clamps</li>
+                        <li>Blood warmer primed</li>
+                        <li>Continue CPR</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-green">
+                    <span class="fc-header">3. Throughout</span>
+                    <ul>
+                        <li>Clear team roles</li>
+                        <li>Monitor for ROSC</li>
+                        <li>Prepare for Theatre transfer</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Left Anterolateral Thoracotomy → HOT</span>
+                    <ul>
+                        <li>4th/5th ICS, mid-axillary to sternum</li>
+                        <li><strong>H:</strong> Haemorrhage (lung twist, aortic clamp)</li>
+                        <li><strong>O:</strong> Open pericardium (ant. to phrenic)</li>
+                        <li><strong>T:</strong> Treat cardiac wound / Internal Massage</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-ROSC Management</span>
+                    <ul>
+                        <li>Immediate transfer to CT Surgery</li>
+                        <li>Continue internal massage if needed</li>
+                        <li>Massive transfusion ongoing</li>
+                    </ul>
+                </div>
+            </div>
+            
+             <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-red" style="width: 100%;">
+                    <span class="fc-header">Key Considerations</span>
+                    <ul>
+                        <li><strong>Clamshell:</strong> Extend across sternum if bilateral pathology or poor access</li>
+                        <li>Survival: Penetrating ~15%, Blunt &lt;2%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">7</div>
+    </div>
+    
+    <!-- ================= PROCEDURE 3: ESCHAROTOMY ================= -->
+    <!-- PAGE 8: CHECKLIST -->
+    <div class="page">
+        <h2>3. Escharotomy</h2>
+        <p><strong>Indication:</strong> Circumferential full-thickness burns with compartment syndrome (Limb: pain/pallor/pulselessness; Chest: reduced expansion/high vent pressures).</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>Scalpel (Size 10 or 22 blade)</li>
+                <li>Electrocautery (Diathermy) - Preferred if available</li>
+                <li>Sterile drapes and gloves</li>
+                <li>Marking pen</li>
+                <li>Dressings (Alginate/Kaltostat)</li>
+                <li>Ketamine (for procedural sedation/analgesia)</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Call for Help</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Consultant + NIC + Burns Centre Advice</div>
+                <div class="checklist-item"><div class="checkbox"></div> Alert Theatre (Fasciotomy may be required if deep muscle involvement)</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>2. Preparation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Position patient to expose full area (supine, limbs abducted)</div>
+                <div class="checklist-item"><div class="checkbox"></div> Mark incision lines with pen (Mid-axial lines)</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Anaesthesia:</strong> Full thickness burns are insensate, but patient will likely require Ketamine sedation for distress and incomplete adjacent burns.</div>
+                <div class="warning-box">TIMING CRITICAL: PERFORM WITHIN 2 HOURS</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Procedure: Limb Escharotomy</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Incisions:</strong> Make BOTH Medial AND Lateral incisions along the mid-axial lines.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Extend from proximal to distal, crossing involved joints (risk areas).</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Depth:</strong> Cut through eschar only until subcutaneous fat bulges. Avoid deep fascia.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Hands:</strong> Incise along radial side of thumb and ulnar side of little finger. Avoid web spaces.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Feet:</strong> Medial and lateral aspects.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>4. Procedure: Chest Escharotomy</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Incise along bilateral anterior axillary lines (Clavicle to costal margin).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Join with transverse incision (costal margin) if needed ('Roman Breastplate').</div>
+                <div class="checklist-item"><div class="checkbox"></div> Aim: To allow chest wall excursion.</div>
+            </div>
+            
+            <div class="checklist-section">
+                <h3>5. Post-Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Apply haemostatic dressings (e.g. Kaltostat). Elevate limbs.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Reassess pulses (Doppler) and airway pressures.</div>
+            </div>
+        </div>
+        <div class="page-number">8</div>
+    </div>
+
+    <!-- PAGE 9: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Escharotomy</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-green">
+                    <span class="fc-header">1. Call for Help</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li>Contact Burns Centre</li>
+                        <li>Alert Theatre</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Preparation</span>
+                    <ul>
+                        <li>Position patient</li>
+                        <li>Scalpel + Cautery</li>
+                        <li>Dressings ready</li>
+                        <li>No anaesthesia usually needed</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-red">
+                    <span class="fc-header">3. Critical Timing</span>
+                    <ul>
+                        <li><strong>WITHIN 2 HOURS</strong></li>
+                        <li>Indications: Pain, paraesthesia, pulselessness</li>
+                        <li>Reduced chest expansion</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Perform Escharotomy</span>
+                    <ul>
+                        <li><strong>LIMB:</strong> Medial + Lateral mid-axial lines</li>
+                        <li><strong>CHEST:</strong> Bilateral anterior axillary lines</li>
+                        <li>Cut through eschar until fat bulges</li>
+                        <li><strong>HANDS:</strong> Radial thumb + Ulnar little finger</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-Procedure</span>
+                    <ul>
+                        <li>Non-adherent dressings</li>
+                        <li>Reassess perfusion immediately</li>
+                        <li>Monitor chest expansion</li>
+                        <li>Transfer to Burns Centre</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">9</div>
+    </div>
+    
+    <!-- ================= PROCEDURE 4: SUBCLAVIAN LINE ================= -->
+    <!-- PAGE 10: CHECKLIST -->
+    <div class="page">
+        <h2>4. Landmark Subclavian Line</h2>
+        <p><strong>Indication:</strong> Need for central access where ultrasound is unavailable or failed.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>Central line kit (Triple Lumen)</li>
+                <li>Sterile Gown, Gloves, Cap, Large drape</li>
+                <li>Chlorhexidine prep</li>
+                <li>1% Lidocaine (10mL) + needles (25G/21G)</li>
+                <li>10mL Syringe (for aspiration)</li>
+                <li>Guidewire, Dilator, Scalpel (11)</li>
+                <li>Suture (Silk/Prolene) & Dressing (Tegaderm)</li>
+                <li>Saline flushes x3</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Call for Help</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Consultant + NIC</div>
+                <div class="checklist-item"><div class="checkbox"></div> Request senior support if inexperienced (Anaesthetics/ITU)</div>
+            </div>
+            
+            <div class="checklist-section">
+                <h3>2. Preparation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Position:</strong> Supine, 15° Trendelenburg (head down) to distend veins.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Arm adducted by side. Head turned to contralateral side.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Towel roll longitudinally between scapulae (optional - to open clavicle space).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Full sterile technique. Pre-flush all lumens and clamp lines.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Landmark:</strong> Identify junction of middle and medial third of clavicle.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Infiltrate LA at insertion site (1-2cm inferior to clavicle).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Insert introducer needle on 10mL syringe (bevel up).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Place index finger in suprasternal notch.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Advance needle under clavicle, aiming towards suprasternal notch.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Keep needle parallel to floor. Aspirate continuously.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Flashback:</strong> Dark, non-pulsatile venous blood.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Remove syringe (OCCOLUDE HUB TO PREVENT AIR EMBOLISM).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Seldinger technique: Insert Guidewire (should pass easily) -> Remove needle -> Incise skin -> Dilate -> Rail road Catheter.</div>
+            </div>
+
+             <div class="checklist-section">
+                <h3>4. Post-Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Aspirate and flush all lumens to confirm flow.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Secure line with suture and sterile dressing.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>URGENT CXR:</strong> Check tip position (SVC/RA junction) & exclude pneumothorax/haemothorax.</div>
+            </div>
+        </div>
+        <div class="page-number">10</div>
+    </div>
+
+    <!-- PAGE 11: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Subclavian Central Line</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-green">
+                    <span class="fc-header">1. Call for Help</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li>Senior support if needed</li>
+                        <li>Allocate roles</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Preparation</span>
+                    <ul>
+                        <li>Supine, 15° Trendelenburg</li>
+                        <li>Head turned away</li>
+                        <li>Full sterile technique</li>
+                        <li>Flush lumens</li>
+                    </ul>
+                </div>
+                 <div class="flow-card card-red">
+                    <span class="fc-header">3. Safety</span>
+                    <ul>
+                        <li>Occlude hub (Air Embolism risk)</li>
+                        <li>Continuous aspiration</li>
+                        <li>Monitor patient</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Landmarks & Technique</span>
+                    <ul>
+                        <li>Junction middle/medial third clavicle</li>
+                        <li>Aim for suprasternal notch</li>
+                        <li>Advance under clavicle, aspirating</li>
+                        <li>Pass guidewire → dilator → catheter</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-Procedure</span>
+                    <ul>
+                        <li>Secure and dress</li>
+                        <li><strong>URGENT CXR before use</strong></li>
+                        <li>Confirm tip position</li>
+                        <li>Exclude pneumothorax</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">11</div>
+    </div>
+
+    <!-- ================= PROCEDURE 5: LATERAL CANTHOTOMY ================= -->
+    <!-- PAGE 12: CHECKLIST -->
+    <div class="page">
+        <h2>5. Lateral Canthotomy</h2>
+        <p><strong>Indication:</strong> Orbital Compartment Syndrome (IOP >40mmHg OR Proptosis + RAPD + Vision Loss). Time Critical < 2 hours.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>1-2% Lidocaine with adrenaline (2mL)</li>
+                <li>Small syringe + 25G/27G needle</li>
+                <li>Small straight scissors (Iris or Tenotomy)</li>
+                <li>Toothed forceps (Adson or similar)</li>
+                <li>Haemostat / Arterial clamp (Mosquito)</li>
+                <li>Sterile gauze & saline</li>
+                <li>Irrigation fluid (if chemical injury)</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Immediate Action</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Call Consultant + NIC</div>
+                <div class="checklist-item"><div class="checkbox"></div> Call Ophthalmology URGENTLY (Do not delay procedure if signs present)</div>
+                <div class="checklist-item"><div class="checkbox"></div> Assess Visual Acuity and IOP if possible.</div>
+                <div class="warning-box">Procedure is SIGHT SAVING. Do not wait for CT.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>2. Procedure Steps</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Clean lateral canthus with saline/iodine.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Inject 1-2mL LA into lateral canthus (directing needle away from globe).</div>
+                <div class="checklist-item"><div class="checkbox"></div> **Crimp:** Apply haemostat to lateral canthus (1cm) for 30-60s to devascularise.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Step 1: Canthotomy</strong> - Use scissors to cut full thickness through the crimped lateral canthus horizontally (~1cm) towards orbital rim.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Step 2: Cantholysis (ESSENTIAL)</strong> - Retract lower lid. Identify inferior crus of lateral canthal tendon (feels like a guitar string).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Point scissors inferoposteriorly towards lateral rim. Cut the inferior crus.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Check:</strong> Lower lid should be freely mobile and pull away from the globe.</div>
+                <div class="checklist-item"><div class="checkbox"></div> If inadequate decompression: Cut superior crus (Superior Cantholysis).</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Post-Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Recheck IOP (<40mmHg) and Vision/RAPD.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Apply antibiotic ointment and sterile dressing.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Do not bandage tightly.</strong> Monitor for re-accumulation.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Arrange urgent CT Orbits and Ophthalmology review.</div>
+            </div>
+        </div>
+        <div class="page-number">12</div>
+    </div>
+
+    <!-- PAGE 13: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Lateral Canthotomy</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-red">
+                    <span class="fc-header">1. IMMEDIATE Call</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li>Ophthalmology URGENTLY</li>
+                        <li><strong>TIME CRITICAL: &lt; 2 Hours</strong></li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Diagnosis</span>
+                    <ul>
+                        <li>IOP > 40mmHg OR</li>
+                        <li>Proptosis + Tense Globe</li>
+                        <li>RAPD + Vision Loss</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-green">
+                    <span class="fc-header">3. Equipment</span>
+                    <ul>
+                        <li>Small scissors</li>
+                        <li>Toothed forceps</li>
+                        <li>Local Anaesthetic</li>
+                        <li>Haemostat</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Canthotomy + Cantholysis</span>
+                    <ul>
+                        <li>1. Cut full thickness lateral canthus (horizontal ~1cm)</li>
+                        <li>2. <strong>CANTHOLYSIS (ESSENTIAL)</strong>: Open scissors vertically</li>
+                        <li>3. Cut inferior crus until lower lid freely mobile</li>
+                        <li>4. Superior cantholysis if inadequate</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-Procedure</span>
+                    <ul>
+                        <li>Light dressing - <strong>NO PRESSURE</strong></li>
+                        <li>Reassess Vision + RAPD + IOP</li>
+                        <li>CT Orbits</li>
+                        <li>Urgent Ophthalmology review</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">13</div>
+    </div>
+
+    <!-- ================= PROCEDURE 6: MAJOR HAEMORRHAGE ================= -->
+    <!-- PAGE 14: CHECKLIST -->
+    <div class="page">
+        <h2>6. Major Haemorrhage Control</h2>
+        <p><strong>Indication:</strong> Life-threatening haemorrhage.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>Rapid Infuser (Belmont/Level 1)</li>
+                <li>Fluid Warmer</li>
+                <li>Major Haemorrhage Pack (Porter to Blood Bank)</li>
+                <li>Large bore IV cannulas (14G/16G) or IO Drill</li>
+                <li>Pelvic Binder</li>
+                <li>Tourniquets / Haemostatic Gauze (Celox)</li>
+                <li>Tranexamic Acid (1g) + Calcium Chloride</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Activation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>ACTIVATE MAJOR HAEMORRHAGE PROTOCOL</strong> via Switchboard (2222).</div>
+                <div class="checklist-item"><div class="checkbox"></div> State location (ED Resus) and estimated blood loss.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Alert Theatre / Interventional Radiology / Porter.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Allocate Scribe to document blood products.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>2. Immediate Control</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Apply direct pressure to bleeding point.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Limb:</strong> Apply tourniquet proximal to wound if uncontrolled.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Pelvis:</strong> Apply pelvic binder over greater trochanters.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Wound:</strong> Pack with haemostatic gauze.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Resuscitation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Insert 2x Large Bore IV (14G/16G) or Humeral IO.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Take samples: FBC, U&E, Coagulation, Fibrinogen, X-match.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Tranexamic Acid:</strong> 1g IV bolus (within 3h of injury) + 1g infusion.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Blood Products:</strong> Give Pack A (4 units O-Neg/O-Pos RBC + 4 FFP).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Ratio 1:1:1 (RBC : FFP : Platelets). Avoid crystalloids.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Permissive Hypotension:</strong> Target SBP 80-90mmHg (radial pulse).</div>
+                <div class="checklist-item"><div class="checkbox"></div> *Head Injury Target: SBP >110mmHg to maintain perfusion.</div>
+            </div>
+
+             <div class="checklist-section">
+                <h3>4. Monitoring</h3>
+                <div class="checklist-item"><div class="checkbox"></div> VBG every 15-30 mins.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Targets:</strong> Hb >70, pH >7.2, Lactate <4, Temp >36°C, Ca >1.1, Fibrinogen >1.5.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Administer 10mL 10% Calcium Chloride IV for every 4 units blood.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Prevent Hypothermia (Bair Hugger, Warm Fluids).</div>
+            </div>
+        </div>
+        <div class="page-number">14</div>
+    </div>
+
+    <!-- PAGE 15: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Major Haemorrhage Control</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-red">
+                    <span class="fc-header">1. ACTIVATE PROTOCOL</span>
+                    <ul>
+                        <li>Call Switchboard</li>
+                        <li>State Location + Loss</li>
+                        <li>Allocate roles</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Immediate Control</span>
+                    <ul>
+                        <li>Direct Pressure</li>
+                        <li>Tourniquet (Limb)</li>
+                        <li>Pelvic Binder</li>
+                        <li>Haemostatic Packing</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-green">
+                    <span class="fc-header">3. Resuscitation</span>
+                    <ul>
+                        <li>TXA 1g IV (within 3h)</li>
+                        <li>Permissive hypotension (80-90)</li>
+                        <li>NO Crystalloid</li>
+                        <li>Blood Products Only</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Blood Products 1:1:1 Ratio</span>
+                    <ul>
+                        <li>Initial: 4 Units RBC + 4 Units FFP</li>
+                        <li>Add 1 unit Platelets per 4 RBC</li>
+                        <li>Warm all products</li>
+                        <li>Use rapid transfuser</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Monitor & Adjust</span>
+                    <ul>
+                        <li>VBG every 15-30 min</li>
+                        <li>Target: Hb >70, pH >7.2, Ca >1.1</li>
+                        <li>Cryoprecipitate if Fibrinogen &lt; 1.5</li>
+                        <li>Surgical/IR for definitive control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">15</div>
+    </div>
+
+    <!-- ================= PROCEDURE 7: MAXFAX TRAUMA ================= -->
+    <!-- PAGE 16: CHECKLIST -->
+    <div class="page">
+        <h2>7. MaxFax Trauma</h2>
+        <p><strong>Indication:</strong> Severe maxillofacial trauma with uncontrolled bleeding.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>Good lighting (Headlight)</li>
+                <li>Suction (Yankauer x2)</li>
+                <li>Magill forceps</li>
+                <li>Thudichum / Killian speculum</li>
+                <li>Rapid Rhino (7.5cm/9cm) or Merocel packs</li>
+                <li>Foley Catheter (12-14Fr) for posterior packing</li>
+                <li>Umbilical clamp / padding</li>
+                <li>Tranexamic Acid 5% soak / Adrenaline 1:1000</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Call for Help</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Consultant + NIC.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Anaesthetics (Likely difficult airway due to blood/anatomy).</div>
+                <div class="checklist-item"><div class="checkbox"></div> MaxFax / ENT URGENTLY.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>2. Airway & Assessment</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Sit patient upright & lean forward (if C-spine/conscious state allows).</div>
+                <div class="checklist-item"><div class="checkbox"></div> High flow oxygen (15L NRB) + Continuous Suction.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Assess Source:</strong> Anterior nasal? Posterior nasal? Oral/Tongue?</div>
+                <div class="checklist-item"><div class="checkbox"></div> Examine for loose teeth/bone fragments (aspiration risk).</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Control Steps</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Oral Bleed:</strong> Direct pressure with gauze/adrenaline soak. Suture if visible vessel.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Anterior Epistaxis:</strong> Suction clots. Insert Rapid Rhino (soak in water) or Merocel. Inflate pilot cuff.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Posterior Epistaxis (if anterior fails):</strong> Use Foley Catheter Technique.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Lubricate Foley (12-14Fr). Insert into nasopharynx (until tip seen in mouth).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Inflate balloon with 10-15mL water.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Retract catheter anteriorly until it lodges against posterior choana.</div>
+                <div class="checklist-item"><div class="checkbox"></div> While maintaining traction, pack anterior nose with ribbon gauze/Merocel.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Secure catheter at nostril with umbilical clamp (padded with gauze to prevent necrosis).</div>
+            </div>
+            
+            <div class="checklist-section">
+                <h3>4. Adjuncts</h3>
+                <div class="checklist-item"><div class="checkbox"></div> IV Tranexamic Acid 1g.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Correct coagulopathy.</div>
+            </div>
+             <div class="warning-box">DO NOT REMOVE POSTERIOR PACKS IN ED. Risk of torrential re-bleed. Specialist Procedure.</div>
+        </div>
+        <div class="page-number">16</div>
+    </div>
+
+    <!-- PAGE 17: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">MaxFax Trauma</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-red">
+                    <span class="fc-header">1. IMMEDIATE Call</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li>Anaesthetics</li>
+                        <li>MaxFax / ENT Urgently</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Airway & Position</span>
+                    <ul>
+                        <li>Sit upright if conscious</li>
+                        <li>Lean forward / Spit out blood</li>
+                        <li>Continuous Suction</li>
+                        <li>Prepare for Intubation</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-green">
+                    <span class="fc-header">3. Identify Source</span>
+                    <ul>
+                        <li>Anterior vs Posterior</li>
+                        <li>Oropharyngeal</li>
+                        <li>Facial Fractures</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Control Bleeding</span>
+                    <ul>
+                        <li>Direct Pressure + Anterior Packing</li>
+                        <li><strong>POSTERIOR:</strong> Foley 14Fr to nasopharynx</li>
+                        <li>Inflate 10-15ml, pull anteriorly</li>
+                        <li>Pack anteriorly, secure clamp</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Adjuncts & Monitoring</span>
+                    <ul>
+                        <li>TXA 1g if major bleeding</li>
+                        <li>Large bore IV, Crossmatch</li>
+                        <li><strong>Don't remove posterior packs in ED</strong></li>
+                        <li>Theatre/IR for definitive control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">17</div>
+    </div>
+
+    <!-- ================= PROCEDURE 8: RESUSCITATIVE HYSTEROTOMY ================= -->
+    <!-- PAGE 18: CHECKLIST -->
+    <div class="page">
+        <h2>8. Resuscitative Hysterotomy</h2>
+        <p><strong>Indication:</strong> Maternal cardiac arrest (Pregnancy ≥20 weeks). No ROSC after 4 minutes.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>Scalpel (Size 10 and 20 blades)</li>
+                <li>Heavy scissors (Mayo)</li>
+                <li>Umbilical Cord Clamps x2</li>
+                <li>Large abdominal swabs</li>
+                <li>Suction</li>
+                <li>Neonatal Resusitaire (warm & checked)</li>
+                <li>Forceps/Clamps (Spencer Wells/Kochers)</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Immediate Activation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Call Consultant + NIC.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Obstetric Registrar IMMEDIATELY.</strong></div>
+                <div class="checklist-item"><div class="checkbox"></div> Neonatal Team (if viable ≥24 weeks).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Allocate Timekeeper (critical).</div>
+            </div>
+            
+            <div class="checklist-section">
+                <h3>2. Indication Check</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Gestation:</strong> Fundus at/above Umbilicus (Approx ≥20 weeks).</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Arrest:</strong> No ROSC at 4 minutes of ALS.</div>
+                <div class="warning-box">PERFORM BY 5 MINUTES FROM ARREST</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Goal:</strong> Primary aim is Maternal Resuscitation (Relieves aortocaval compression).</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Continue CPR & Manual Left Uterine Displacement throughout.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Splash & Dash:</strong> Rapid betadine pour (no sterile drapes needed).</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Incision 1:</strong> Large vertical midline incision from Xiphisternum/Umbilicus to Pubis.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Cut deep through all layers (skin, fat, rectus sheath) to peritoneum.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Retract bladder downwards (if visible/time allows).</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Incision 2:</strong> Small vertical incision in lower uterine segment. Insert fingers to lift wall away from fetus.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Extend uterine incision vertically with heavy scissors (guarding fetus with fingers).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Deliver baby, clamp cord x2 & cut. Hand to Neonatal Team.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>4. Post-Delivery</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Continue Maternal CPR (Effectiveness often improves immediately).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Deliver placenta if spontaneously separating. Otherwise leave.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Administer Oxytocin 10 units IV/IM. Pack uterus with wet swabs.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Apply clamps to bleeding uterine edges. Transfer to Theatre.</div>
+            </div>
+        </div>
+        <div class="page-number">18</div>
+    </div>
+
+    <!-- PAGE 19: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Resuscitative Hysterotomy</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-red">
+                    <span class="fc-header">1. IMMEDIATE Call</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li><strong>Obstetric Registrar</strong></li>
+                        <li>Neonatal Team if ≥24 weeks</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Indication</span>
+                    <ul>
+                        <li>Pregnancy ≥20 weeks</li>
+                        <li>Maternal Arrest</li>
+                        <li>No ROSC after 4 min</li>
+                        <li><strong>GOAL: Delivery by 5 mins</strong></li>
+                    </ul>
+                </div>
+                <div class="flow-card card-green">
+                    <span class="fc-header">3. During CPR</span>
+                    <ul>
+                        <li>CPR + Left Uterine Displacement</li>
+                        <li>NO sterile technique</li>
+                        <li>Neonatal area ready</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Hysterotomy Technique</span>
+                    <ul>
+                        <li>Vertical midline incision: Pubis to Umbilicus</li>
+                        <li>Vertical uterine incision (extend with fingers)</li>
+                        <li>Deliver baby, clamp/cut cord immediately</li>
+                        <li>Hand to neonatal team</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-Delivery</span>
+                    <ul>
+                        <li>Continue CPR (Relieves aortocaval compression)</li>
+                        <li>Deliver Placenta / Pack Uterus</li>
+                        <li>Oxytocin 10 units</li>
+                        <li>Emergency Theatre for repair</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">19</div>
+    </div>
+
+    <!-- ================= PROCEDURE 9: OPEN THORACOSTOMY ================= -->
+    <!-- PAGE 20: CHECKLIST -->
+    <div class="page">
+        <h2>9. Open Thoracostomy</h2>
+        <p><strong>Indication:</strong> Massive haemothorax / Tension Pneumothorax (Failed needle) / Traumatic Arrest.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required</h3>
+            <ul class="equipment-list">
+                <li>Scalpel (Size 10 blade)</li>
+                <li>Spencer Wells / Kelly forceps</li>
+                <li>Antiseptic solution (Chlorhexidine)</li>
+                <li>Sterile gloves</li>
+                <li>Chest Drain (28-32Fr) - if ROSC achieved</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Call for Help</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Consultant + NIC.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Cardiothoracic Surgery if massive haemothorax.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Anaesthetics/Airway support.</div>
+            </div>
+            
+            <div class="checklist-section">
+                <h3>2. Preparation</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Position:</strong> Supine or 30°, Arm abducted 90° (if possible).</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Landmarks:</strong> Triangle of Safety (5th ICS, Ant. to Mid-axillary line).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Rapid skin prep.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Procedure: Finger Thoracostomy</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Make 4-6cm Transverse Incision (large enough for finger) just superior to rib border.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Blunt dissection with forceps down to pleura.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Puncture pleura with forceps tip (spread open).</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Insert Finger:</strong> Push finger through pleura (Expect rush of air/blood).</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Digital Sweep:</strong> Sweep finger 360° to confirm pleural space, feel lung expansion, and clear adhesions/clots.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Leave open (simple thoracostomy) in arrest to allow decompression.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>4. Drain Insertion (If indicated/ROSC)</h3>
+                <div class="checklist-item"><div class="checkbox"></div> If output obtained or ROSC achieved, insert large bore drain (28-32Fr).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Guide drain posteriorly & superiorly using finger as guide.</div>
+                <div class="warning-box">NEVER USE TROCAR</div>
+                <div class="checklist-item"><div class="checkbox"></div> Connect to underwater seal. Secure with suture.</div>
+            </div>
+        </div>
+        <div class="page-number">20</div>
+    </div>
+
+    <!-- PAGE 21: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Open Thoracostomy</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-green">
+                    <span class="fc-header">1. Call for Help</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li>CT Surgery if massive</li>
+                        <li>Allocate roles</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Preparation</span>
+                    <ul>
+                        <li>Supine or 30°</li>
+                        <li>Triangle of Safety</li>
+                        <li>5th Intercostal Space</li>
+                        <li>Large bore drain ready</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-red">
+                    <span class="fc-header">3. Safety</span>
+                    <ul>
+                        <li>Monitor patient</li>
+                        <li>Tactile feedback essential</li>
+                        <li><strong>NEVER use trocar</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Open Thoracostomy Technique</span>
+                    <ul>
+                        <li>4-6cm transverse incision superior rib border</li>
+                        <li>Blunt dissection to pleura</li>
+                        <li><strong>Insert finger, confirm position</strong></li>
+                        <li>Digital sweep (adhesions/diaphragm)</li>
+                        <li>Guide drain with finger</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-Procedure</span>
+                    <ul>
+                        <li>Confirm swing/bubbling</li>
+                        <li>Urgent CXR</li>
+                        <li>Monitor hourly</li>
+                        <li>>1500mL or >200mL/hr -> CT Surgery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">21</div>
+    </div>
+
+     <!-- ================= PROCEDURE 10: PERICARDIOCENTESIS ================= -->
+    <!-- PAGE 22: CHECKLIST -->
+    <div class="page">
+        <h2>10. Pericardiocentesis (Echo-Guided)</h2>
+        <p><strong>Indication:</strong> Cardiac Tamponade (Obstructive shock). Symptomatic moderate-large effusion non-responsive to medical therapy.</p>
+        
+        <div class="equipment-box">
+            <h3>Equipment Required (ESC Guidance)</h3>
+            <ul class="equipment-list">
+                <li>Echocardiography Machine + Cardiac Probe</li>
+                <li>Sterile probe cover & sterile gel</li>
+                <li>16-18G Teflon-sheathed needle</li>
+                <li>J-tip guidewire & Dilator (6-8Fr)</li>
+                <li>Pigtail catheter (6-8Fr)</li>
+                <li>3-way stopcock & 20ml Syringe</li>
+                <li>1% Lidocaine</li>
+                <li>ECG Monitor & Resus Trolley</li>
+            </ul>
+        </div>
+
+        <div class="checklist-container">
+            <div class="checklist-section">
+                <h3>1. Call for Help</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Consultant + NIC.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Cardiology / Cardiothoracic Registrar.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Alert Theatres (in case of myocardial puncture/fail).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Check Coagulation (unless cardiac arrest/peri-arrest).</div>
+            </div>
+            
+            <div class="checklist-section">
+                <h3>2. Preparation & Echo</h3>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Position:</strong> Semi-reclining (30-45°) to pool fluid inferiorly/anteriorly.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Continuous ECG & BP Monitoring.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Echo Assessment:</strong> Identify largest fluid pocket and closest distance from skin.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Choose Approach:</strong></div>
+                <div class="checklist-item"><div class="checkbox"></div> - <em>Apical:</em> 1-2cm lateral to apex beat (5th-7th ICS). Often best for loculated fluid.</div>
+                <div class="checklist-item"><div class="checkbox"></div> - <em>Subcostal:</em> Between xiphisternum and left costal margin (Angle 15-30° to L shoulder).</div>
+                <div class="checklist-item"><div class="checkbox"></div> - <em>Parasternal:</em> 5th Left ICS close to sternal margin.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>3. Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Sterile prep, drape, and LA infiltration.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Advance needle while aspirating, following visualized trajectory.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Fluid Aspirated:</strong> Confirm non-clotting pericardial fluid.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>Confirmation:</strong> Inject agitated saline (bubbles seen in pericardium on Echo).</div>
+                <div class="checklist-item"><div class="checkbox"></div> Seldinger Technique: Insert wire -> Dilate -> Insert Pigtail Catheter.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Aspirate fluid until haemodynamics improve.</div>
+            </div>
+
+            <div class="checklist-section">
+                <h3>4. Post-Procedure</h3>
+                <div class="checklist-item"><div class="checkbox"></div> Secure drain and flush with heparinised saline if available.</div>
+                <div class="checklist-item"><div class="checkbox"></div> <strong>CXR:</strong> Check for Pneumothorax.</div>
+                <div class="checklist-item"><div class="checkbox"></div> Monitor for 'Pericardial Decompression Syndrome' (Pulm Oedema/Shock).</div>
+            </div>
+             <div class="warning-box">Avoid Aortic Dissection cases if possible (Surgical management preferred).</div>
+        </div>
+        <div class="page-number">22</div>
+    </div>
+
+    <!-- PAGE 23: FLOWCHART -->
+    <div class="page flowchart-page">
+        <div class="chart-title">Pericardiocentesis</div>
+        
+        <div class="flow-container">
+            <div class="flow-row">
+                <div class="flow-card card-red">
+                    <span class="fc-header">1. IMMEDIATE Call</span>
+                    <ul>
+                        <li>Consultant + NIC</li>
+                        <li>Cardiology / CT Surgery</li>
+                        <li>Alert Theatres</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-yellow">
+                    <span class="fc-header">2. Preparation</span>
+                    <ul>
+                        <li>Position 30-45°</li>
+                        <li>ECG Monitor</li>
+                        <li>Echo: Identify largest pocket</li>
+                        <li>Sterile Prep</li>
+                    </ul>
+                </div>
+                <div class="flow-card card-green">
+                    <span class="fc-header">3. Approaches</span>
+                    <ul>
+                        <li><strong>Apical:</strong> Lat to apex beat</li>
+                        <li><strong>Subcostal:</strong> Angle to L shoulder</li>
+                        <li><strong>Parasternal:</strong> 5th ICS L sternal edge</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-blue">
+                    <span class="fc-header">Echo-Guided Procedure</span>
+                    <ul>
+                        <li>Advance needle in aspiration</li>
+                        <li>Confirm position (Agitated Saline)</li>
+                        <li>Insert Wire -> Dilate -> Pigtail</li>
+                        <li>Drain until stable</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="arrow-down">↓</div>
+
+            <div class="flow-row">
+                <div class="flow-card card-green" style="width: 300px;">
+                    <span class="fc-header">Post-Procedure</span>
+                    <ul>
+                        <li>Secure Drain</li>
+                        <li>Urgent CXR (Pneumothorax?)</li>
+                        <li>Monitor Drainage</li>
+                        <li>Watch for Decompression Syndrome</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">23</div>
+    </div>
+
+</body>
+</html>
