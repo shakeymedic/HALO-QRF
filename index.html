@@ -369,6 +369,11 @@
             text-align: center;
         }
 
+        /* Screen only: on narrow screens the fixed-width A4 pages scroll sideways
+           inside this wrapper, so the whole browser page no longer scrolls sideways */
+        @media screen {
+            .pages-scroll { overflow-x: auto; }
+        }
     </style>
 </head>
 <body>
@@ -381,6 +386,7 @@
         </button>
     </div>
 
+    <div class="pages-scroll">
     <!-- PAGE 1: TITLE PAGE -->
     <div class="page title-page">
         <div class="logo-placeholder">BHH Logo</div>
@@ -1833,6 +1839,8 @@
         <p>Please scan this code to log usage of the HALO Handbook.</p>
         <p>Your feedback improves patient safety.</p>
     </div>
+
+    </div><!-- /.pages-scroll -->
 
 </body>
 </html>
